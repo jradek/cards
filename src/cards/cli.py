@@ -83,6 +83,47 @@ def list_cards(noowner, owner, done, format):
                    tablefmt=format))
 
 
+#  This is really just a copy of the list command, trimmed down to one item
+#  Definitely room for improvement
+# @cards_cli.command(name="get", help="get a card")
+# @click.argument('card_id', type=int)
+# @click.option('-f', '--format', default=DEFAULT_TABLEFORMAT,
+#               type=str,
+#               help='table formatting option')
+# def get_card(card_id, format):
+#     """
+#     Get card in db.
+#     """
+#     the_card = cards_db().get(card_id)
+#     t = the_card
+#
+#     #  json is a special case
+#     if format == 'json':
+#         print(json.dumps(t.to_dict(), sort_keys=True, indent=4))
+#         return
+#
+#     # who's going to remember 'pipe' for markdown?
+#     if format == 'markdown':
+#         format = 'pipe'
+#
+#     if format == 'packed':
+#         done = 'x' if t.done else 'o'
+#         owner = 'unassigned' if t.owner is None else t.owner
+#         line = f'{t.id} {owner} {done} {t.summary}'
+#         print(line)
+#         return
+#
+#     # all formats except json/none use tabulate
+#     items = []
+#     done = ' x ' if t.done else ''
+#     owner = '' if t.owner is None else t.owner
+#     items.append((t.id, owner, done, t.summary))
+#
+#     print(tabulate(items,
+#                    headers=('ID', 'owner', 'done', 'summary'),
+#                    tablefmt=format))
+
+
 @cards_cli.command(help="update card")
 @click.argument('card_id', type=int)
 @click.option('-o', '--owner', default=None,

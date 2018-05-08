@@ -117,3 +117,18 @@ def test_delete(db_empty, cards_cli):
     # THEN the other card remains in the db
     output = cards_cli('list --format=packed')
     assert '2 unassigned o two' == output
+
+
+# @pytest.fixture()
+# def predictable_db(db_empty, cards_cli):
+#     cards_cli('add one')
+#     cards_cli('add two')
+#     cards_cli('update 1 --owner Paul')
+#     cards_cli('update 2 --owner Brian --done True')
+#
+#
+# @pytest.mark.parametrize('index, expected', [ (1, '1 Paul o one'),
+#                                               (2, '2 Brian x two')])
+# def test_get(predictable_db, cards_cli, index, expected):
+#     output = cards_cli(f'get {index}')
+#     assert expected ==  output
