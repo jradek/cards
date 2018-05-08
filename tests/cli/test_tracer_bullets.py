@@ -119,6 +119,28 @@ def test_delete(db_empty, cards_cli):
     assert '2 unassigned o two' == output
 
 
+# -----------------------------
+# -- a possible first draft
+# -----------------------------
+# def test_get(db_empty, cards_cli):
+#     # GIVEN a known set of items
+#     cards_cli('add one')
+#     cards_cli('add two')
+#     cards_cli('update 1 --owner Paul')
+#     cards_cli('update 2 --owner Brian --done True')
+#
+#     # WHEN get() is called with a valid index
+#     card_paul = cards_cli('get 1')
+#     card_brian = cards_cli('get 2')
+#
+#     # THEN expected output
+#     assert '1 Paul o one' == card_paul
+#     assert '2 Brian x two' == card_brian
+
+
+# -----------------------------
+# -- a possible second draft
+# -----------------------------
 # @pytest.fixture()
 # def predictable_db(db_empty, cards_cli):
 #     cards_cli('add one')
@@ -130,5 +152,5 @@ def test_delete(db_empty, cards_cli):
 # @pytest.mark.parametrize('index, expected', [ (1, '1 Paul o one'),
 #                                               (2, '2 Brian x two')])
 # def test_get(predictable_db, cards_cli, index, expected):
-#     output = cards_cli(f'get {index}')
+#     output = cards_cli(f'get {index} -f packed')
 #     assert expected ==  output

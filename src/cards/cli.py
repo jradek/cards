@@ -35,6 +35,31 @@ def delete(card_id):
     """Remove card in db with given id."""
     cards_db().delete(card_id)
 
+@cards_cli.command(help="update card")
+@click.argument('card_id', type=int)
+@click.option('-o', '--owner', default=None,
+              help='change the card owner')
+@click.option('-s', '--summary', default=None,
+              help='change the card summary')
+@click.option('-d', '--done', default=None,
+              type=bool,
+              help='change the card done state (True or False)')
+def update(card_id, owner, summary, done):
+    """Modify a card in db with given id with new info."""
+    cards_db().update(card_id, cards.Card(summary, owner, done))
+
+
+@cards_cli.command(help="list count")
+@click.option('-n', '--noowner', default=None, is_flag=True,
+              help='count cards without owners')
+@click.option('-o', '--owner', default=None,
+              help='count cards with given owner')
+@click.option('-d', '--done', default=None,
+              type=bool,
+              help='count cards with given done state')
+def count(noowner, owner, done):
+    """Return number of cards in db."""
+    print(cards_db().count(noowner, owner, done))
 
 @cards_cli.command(name="list", help="list cards")
 @click.option('-n', '--noowner', default=None, is_flag=True,
@@ -83,26 +108,22 @@ def list_cards(noowner, owner, done, format):
                    tablefmt=format))
 
 
-#  This is really just a copy of the list command, trimmed down to one item
-#  Definitely room for improvement
+# -----------------------------
+# -- a possible first draft
+# -- mostly a copy of the list implementation
+# -----------------------------
 # @cards_cli.command(name="get", help="get a card")
 # @click.argument('card_id', type=int)
 # @click.option('-f', '--format', default=DEFAULT_TABLEFORMAT,
 #               type=str,
 #               help='table formatting option')
 # def get_card(card_id, format):
-#     """
-#     Get card in db.
-#     """
-#     the_card = cards_db().get(card_id)
-#     t = the_card
+#     t = cards_db().get(card_id)
 #
-#     #  json is a special case
 #     if format == 'json':
 #         print(json.dumps(t.to_dict(), sort_keys=True, indent=4))
 #         return
 #
-#     # who's going to remember 'pipe' for markdown?
 #     if format == 'markdown':
 #         format = 'pipe'
 #
@@ -113,42 +134,40 @@ def list_cards(noowner, owner, done, format):
 #         print(line)
 #         return
 #
-#     # all formats except json/none use tabulate
-#     items = []
 #     done = ' x ' if t.done else ''
 #     owner = '' if t.owner is None else t.owner
-#     items.append((t.id, owner, done, t.summary))
+#     items = [(t.id, owner, done, t.summary),]
 #
 #     print(tabulate(items,
 #                    headers=('ID', 'owner', 'done', 'summary'),
 #                    tablefmt=format))
-
-
-@cards_cli.command(help="update card")
-@click.argument('card_id', type=int)
-@click.option('-o', '--owner', default=None,
-              help='change the card owner')
-@click.option('-s', '--summary', default=None,
-              help='change the card summary')
-@click.option('-d', '--done', default=None,
-              type=bool,
-              help='change the card done state (True or False)')
-def update(card_id, owner, summary, done):
-    """Modify a card in db with given id with new info."""
-    cards_db().update(card_id, cards.Card(summary, owner, done))
-
-
-@cards_cli.command(help="list count")
-@click.option('-n', '--noowner', default=None, is_flag=True,
-              help='count cards without owners')
-@click.option('-o', '--owner', default=None,
-              help='count cards with given owner')
-@click.option('-d', '--done', default=None,
-              type=bool,
-              help='count cards with given done state')
-def count(noowner, owner, done):
-    """Return number of cards in db."""
-    print(cards_db().count(noowner, owner, done))
+#
+#
+# @cards_cli.command(help="update card")
+# @click.argument('card_id', type=int)
+# @click.option('-o', '--owner', default=None,
+#               help='change the card owner')
+# @click.option('-s', '--summary', default=None,
+#               help='change the card summary')
+# @click.option('-d', '--done', default=None,
+#               type=bool,
+#               help='change the card done state (True or False)')
+# def update(card_id, owner, summary, done):
+#     """Modify a card in db with given id with new info."""
+#     cards_db().update(card_id, cards.Card(summary, owner, done))
+#
+#
+# @cards_cli.command(help="list count")
+# @click.option('-n', '--noowner', default=None, is_flag=True,
+#               help='count cards without owners')
+# @click.option('-o', '--owner', default=None,
+#               help='count cards with given owner')
+# @click.option('-d', '--done', default=None,
+#               type=bool,
+#               help='count cards with given done state')
+# def count(noowner, owner, done):
+#     """Return number of cards in db."""
+#     print(cards_db().count(noowner, owner, done))
 
 
 def cards_db():
