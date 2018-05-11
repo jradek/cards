@@ -141,33 +141,6 @@ def list_cards(noowner, owner, done, format):
 #     print(tabulate(items,
 #                    headers=('ID', 'owner', 'done', 'summary'),
 #                    tablefmt=format))
-#
-#
-# @cards_cli.command(help="update card")
-# @click.argument('card_id', type=int)
-# @click.option('-o', '--owner', default=None,
-#               help='change the card owner')
-# @click.option('-s', '--summary', default=None,
-#               help='change the card summary')
-# @click.option('-d', '--done', default=None,
-#               type=bool,
-#               help='change the card done state (True or False)')
-# def update(card_id, owner, summary, done):
-#     """Modify a card in db with given id with new info."""
-#     cards_db().update(card_id, cards.Card(summary, owner, done))
-#
-#
-# @cards_cli.command(help="list count")
-# @click.option('-n', '--noowner', default=None, is_flag=True,
-#               help='count cards without owners')
-# @click.option('-o', '--owner', default=None,
-#               help='count cards with given owner')
-# @click.option('-d', '--done', default=None,
-#               type=bool,
-#               help='count cards with given done state')
-# def count(noowner, owner, done):
-#     """Return number of cards in db."""
-#     print(cards_db().count(noowner, owner, done))
 
 
 def cards_db():
