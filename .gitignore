@@ -103,5 +103,8 @@ ENV/
 # pycharm
 .idea/
 
+# vscode
+.vscode/
+
 # pytest
 .pytest_cache/
