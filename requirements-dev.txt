@@ -1,3 +1,5 @@
 tox
 pytest
 pre-commit
+pytest-cov
+flit
